@@ -47,8 +47,14 @@ class UserController
   /*Editar um usuário e salvar no banco de dados.*/
   public function update($id)
   {
+    $user = User::get($id); /*Verificar se o usuário existe no banco de dados.*/
+
+    User::update($user->getId(), $_POST['name'], $_POST['email'], $_POST['type'], $_POST['password']);
+
+    header("location: /Treinamento2020/user/index");
   }
 
+  /*Apagar um usuário. */
   public function delete($id)
   {
   }
@@ -97,5 +103,6 @@ class UserController
   /*Pegar o id para setar os campos.*/
   public static function get($id)
   {
+    return User::get($id);
   }
 }

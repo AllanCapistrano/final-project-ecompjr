@@ -38,6 +38,18 @@ class User
   /*Retornar um usuário pelo id.*/
   public static function get($id)
   {
+    $connection = Connection::getConnection();
+    $query = "select * from users where id = {$id[0]}";
+    $result = mysqli_query($connection, $query);
+
+    if (mysqli_num_rows($result) == 1) { /*Se o usuário existir.*/
+      $user = mysqli_fetch_assoc($result);
+      $varUser = new User($user['id'], $user['name'], $user['email'], $user['type']);
+
+      return $varUser;
+    } else {
+      return false;
+    }
   }
 
   /*Criar um novo usuário.*/
@@ -46,7 +58,8 @@ class User
     $connection = Connection::getConnection();
     $query = "insert into users(name, email, type, password) values('{$name}', 
     '{$email}', '{$type}', '{$password}')";
-    $result = mysqli_query($connection, $query);
+
+    mysqli_query($connection, $query);
   }
 
   /*Retorna todos os usuários.*/
@@ -61,7 +74,7 @@ class User
       $user = mysqli_fetch_assoc($result);
       $users[$i] = new User($user['id'], $user['name'], $user['email'], $user['type']);
     }
-    
+
     return $users;
   }
 
@@ -71,8 +84,14 @@ class User
   }
 
   /*Editar um usuário já existente.*/
-  public static function update($id, $name, $email, $type, $password, $password_confirmation)
+  /*Falta a parte da senha já vim preenchida.*/
+  public static function update($id, $name, $email, $type, $password/*, $password_confirmation*/)
   {
+    $connection = Connection::getConnection();
+    $query = "update users set name = '{$name}', email = '{$email}', 
+      type = '{$type}', password = '{$password}' where id = {$id} ";
+
+    mysqli_query($connection, $query);
   }
 
   public function getId()
@@ -100,23 +119,23 @@ class User
     return $this->password;
   }
 
-  public function setType($name)
-  {
-    $this->name = $name;
-  }
+  // public function setType($name)
+  // {
+  //   $this->name = $name;
+  // }
 
-  public function setName($name)
-  {
-    $this->name = $name;
-  }
+  // public function setName($name)
+  // {
+  //   $this->name = $name;
+  // }
 
-  public function setEmail($email)
-  {
-    $this->email = $email;
-  }
+  // public function setEmail($email)
+  // {
+  //   $this->email = $email;
+  // }
 
-  public function setPassword($password)
-  {
-    $this->password = $password;
-  }
+  // public function setPassword($password)
+  // {
+  //   $this->password = $password;
+  // }
 }
