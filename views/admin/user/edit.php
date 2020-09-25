@@ -19,6 +19,6 @@
         </select>
         <input type="password" name="password">
         <input type="password" name="password_confirmation">
-        <button type="submit"> Cadastrar </button>        
+        <button type="submit"> Editar </button>        
     </form>
 </html>
