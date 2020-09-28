@@ -42,6 +42,7 @@ class UserController
   /*Página para o usuário editar o seu perfil.*/
   public function profile()
   {
+    header("location: /Treinamento2020/views/admin/user/profile.php");
   }
 
   /*Editar um usuário e salvar no banco de dados.*/
