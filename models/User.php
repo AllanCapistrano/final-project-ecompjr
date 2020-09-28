@@ -28,11 +28,9 @@ class User
       $varUser = new User($user['id'], $user['name'], $user['email'], $user['type']);
 
       return $varUser;
-    } else {;
+    } else {
       return false;
     }
-
-    // mysqli_close($connection);
   }
 
   /*Retornar um usuário pelo id.*/
