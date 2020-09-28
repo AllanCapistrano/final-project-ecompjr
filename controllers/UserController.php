@@ -96,6 +96,12 @@ class UserController
 
   public static function verifyAdmin()
   {
+    if($_SESSION['user']->getType() != "admin"){
+      echo "<h1>Erro 403</h1>";
+      echo "<h3>Você não possui permissão para acessar essa página.</h3>";
+      echo "<a href='/Treinamento2020/views/admin/dashboard.php'>Voltar</a>";
+      die();
+    }
   }
 
   public static function logout()
