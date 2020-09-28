@@ -52,7 +52,11 @@ class UserController
 
     User::update($user->getId(), $_POST['name'], $_POST['email'], $_POST['type'], $_POST['password']);
 
-    header("location: /Treinamento2020/user/index");
+    if($user->getType() != "admin"){
+      header("location: /Treinamento2020/views/admin/dashboard.php");
+    } else {
+      header("location: /Treinamento2020/user/index");
+    }
   }
 
   /*Apagar um usuário. */
