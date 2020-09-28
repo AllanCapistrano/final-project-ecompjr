@@ -81,6 +81,10 @@ class User
   /*Deletar um usuário.*/
   public static function delete($id)
   {
+    $connection = Connection::getConnection();
+    $query = "delete from users where id = {$id}";
+
+    mysqli_query($connection, $query);
   }
 
   /*Editar um usuário já existente.*/

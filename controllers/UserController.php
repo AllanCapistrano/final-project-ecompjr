@@ -57,6 +57,11 @@ class UserController
   /*Apagar um usuário. */
   public function delete($id)
   {
+    $user = User::get($id);
+
+    User::delete($user->getId());
+
+    header("location: /Treinamento2020/user/index");
   }
 
   /*Listar todos os usuários.*/
