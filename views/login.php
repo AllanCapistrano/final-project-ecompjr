@@ -3,6 +3,10 @@ session_start();
 ?>
 <html>
 <?php
+if (isset($_SESSION['offline'])) {
+  echo $_SESSION['offline'];
+}
+
 if (isset($_SESSION['login-error'])) {
   echo $_SESSION['login-error'];
 }

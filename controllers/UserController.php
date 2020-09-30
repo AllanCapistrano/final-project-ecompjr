@@ -91,17 +91,21 @@ class UserController
       header("location: /Treinamento2020/views/admin/dashboard.php");
       unset($_SESSION['login-error']);
     } else {
-      $_SESSION['login-error'] = "Email e/ou senha incorretos, tente novamente!";
+      $_SESSION['login-error'] = "Email e/ou senha incorretos, tente novamente! <br/>";
 
       header("location: /Treinamento2020/home/login");
+      unset($_SESSION['offline']);
     }
   }
 
   public static function verifyLogin()
   {
     if($_SESSION['user'] == null){ /*Se não estiver logado.*/
+      $_SESSION['offline'] = "É necessário fazer login primeiro para poder acessar essa página! <br/>";
+
       header("location: /Treinamento2020/home/login");
-      /*Avisar que o usuário não estã logado */
+    } else {
+      unset($_SESSION['offline']);
     }
   }
 
@@ -126,6 +130,6 @@ class UserController
   /*Pegar o id para setar os campos.*/
   public static function get($id)
   {
-    return User::get($id[0]);
+    return User::get($id);
   }
 }
