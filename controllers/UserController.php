@@ -87,10 +87,12 @@ class UserController
 
     if ($user) {
       $_SESSION['user'] = $user;
+      
       header("location: /Treinamento2020/views/admin/dashboard.php");
+      unset($_SESSION['login-error']);
     } else {
-      /*Avisar para o usuário que algo deu errado.*/
-      $_SESSION['errologin'] = "Essas credenciais não foram encontradas.";
+      $_SESSION['login-error'] = "Email e/ou senha incorretos, tente novamente!";
+
       header("location: /Treinamento2020/home/login");
     }
   }

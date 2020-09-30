@@ -3,7 +3,9 @@
 ?>
 <html>
   <?php
-    /*Mostar o erro utilizando sessão.*/
+    if (isset($_SESSION['login-error'])) {
+      echo $_SESSION['login-error'];
+    }
   ?>
     <form action="/Treinamento2020/user/check" method="post">
         <input name="email" placeholder="email">        
