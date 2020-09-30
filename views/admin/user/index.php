@@ -57,3 +57,6 @@ foreach ($users as $user) {
   echo "<br>";
 }
 ?>
+
+<br />
+<a href="http://localhost/Treinamento2020/views/admin/dashboard.php">Voltar</a>

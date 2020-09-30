@@ -26,5 +26,6 @@ if (isset($_SESSION['senhas-diferentes'])) {
   <input type="password" name="password_confirmation" placeholder="Confirme sua senha">
   <button type="submit"> Editar </button>
 </form>
+<a href="/Treinamento2020/user/index">Voltar</a>
 
 </html>

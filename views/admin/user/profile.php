@@ -20,5 +20,6 @@ $user = $_SESSION['user'];
   <input type="password" name="password_confirmation" placeholder="Confirme sua senha">
   <button type="submit"> Editar </button>
 </form>
+<a href="http://localhost/Treinamento2020/views/admin/dashboard.php">Voltar</a>
 
 </html>
