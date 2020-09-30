@@ -37,7 +37,7 @@ class User
   public static function get($id)
   {
     $connection = Connection::getConnection();
-    $query = "select * from users where id = '{$id}'"; /*Verificar id, array to string */
+    $query = "select * from users where id = '{$id}'";
     $result = mysqli_query($connection, $query);
 
     if (mysqli_num_rows($result) == 1) { /*Se o usuário existir.*/
@@ -100,11 +100,11 @@ class User
       }
 
       mysqli_query($connection, $query);
-      unset($_SESSION['senhas-diferentes']);
+      unset($_SESSION['different-passwords']);
 
       return true;
     } else {
-      $_SESSION['senhas-diferentes'] = "Erro, as senhas digitadas não são iguais!";
+      $_SESSION['different-passwords'] = "Erro, as senhas digitadas não são iguais!";
 
       return false;
     }

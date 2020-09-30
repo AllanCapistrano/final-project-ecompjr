@@ -10,8 +10,8 @@ $user = UserController::get($_GET['id']);
 
 <html>
 <?php
-if (isset($_SESSION['senhas-diferentes'])) {
-  echo $_SESSION['senhas-diferentes'];
+if (isset($_SESSION['different-passwords'])) {
+  echo $_SESSION['different-passwords'];
 }
 ?>
 <form action="/Treinamento2020/user/update/<?php echo $user->getId() ?>" method="post">
