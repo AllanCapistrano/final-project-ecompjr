@@ -119,6 +119,6 @@ class UserController
   /*Pegar o id para setar os campos.*/
   public static function get($id)
   {
-    return User::get($id);
+    return User::get($id[0]);
   }
 }
