@@ -50,12 +50,17 @@ class UserController
   { 
     $user = User::get($id[0]); /*Verificar se o usuário existe no banco de dados.*/
 
-    User::update($user->getId(), $_POST['name'], $_POST['email'], $_POST['type'], $_POST['password']);
+    $flag = User::update($user->getId(), $_POST['name'], $_POST['email'], $_POST['type'], 
+      $_POST['password'], $_POST['password_confirmation']);
 
-    if($_SESSION['user']->getType() != "admin"){
-      header("location: /Treinamento2020/views/admin/dashboard.php");
+    if(!$flag){ /*Caso as senhas digitadas forem diferentes.*/
+      header("location: /Treinamento2020/user/edit/{$id[0]}");
     } else {
-      header("location: /Treinamento2020/user/index");
+      if($_SESSION['user']->getType() != "admin"){
+        header("location: /Treinamento2020/views/admin/dashboard.php");
+      } else {
+        header("location: /Treinamento2020/user/index");
+      }
     }
   }
 

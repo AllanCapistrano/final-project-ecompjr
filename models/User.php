@@ -86,14 +86,28 @@ class User
   }
 
   /*Editar um usuário já existente.*/
-  /*Falta a parte da senha já vim preenchida.*/
-  public static function update($id, $name, $email, $type, $password/*, $password_confirmation*/)
+  public static function update($id, $name, $email, $type, $password, $password_confirmation)
   {
-    $connection = Connection::getConnection();
-    $query = "update users set name = '{$name}', email = '{$email}', 
-      type = '{$type}', password = '{$password}' where id = {$id} ";
+    if ($password === $password_confirmation) {
+      $connection = Connection::getConnection();
 
-    mysqli_query($connection, $query);
+      if ($password == "") { /*Se não digitar uma senha, ela não é alterada. */
+        $query = "update users set name = '{$name}', email = '{$email}', 
+        type = '{$type}' where id = {$id} ";
+      } else {
+        $query = "update users set name = '{$name}', email = '{$email}', 
+          type = '{$type}', password = '{$password}' where id = {$id} ";
+      }
+
+      mysqli_query($connection, $query);
+      unset($_SESSION['senhas-diferentes']);
+
+      return true;
+    } else {
+      $_SESSION['senhas-diferentes'] = "Erro, as senhas digitadas não são iguais!";
+
+      return false;
+    }
   }
 
   public function getId()
