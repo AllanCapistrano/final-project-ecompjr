@@ -47,8 +47,8 @@ class UserController
 
   /*Editar um usuário e salvar no banco de dados.*/
   public function update($id)
-  {
-    $user = User::get($id); /*Verificar se o usuário existe no banco de dados.*/
+  { 
+    $user = User::get($id[0]); /*Verificar se o usuário existe no banco de dados.*/
 
     User::update($user->getId(), $_POST['name'], $_POST['email'], $_POST['type'], $_POST['password']);
 
@@ -62,7 +62,7 @@ class UserController
   /*Apagar um usuário. */
   public function delete($id)
   {
-    $user = User::get($id);
+    $user = User::get($id[0]);
 
     User::delete($user->getId());
 

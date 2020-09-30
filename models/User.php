@@ -37,7 +37,7 @@ class User
   public static function get($id)
   {
     $connection = Connection::getConnection();
-    $query = "select * from users where id = {$id[0]}";
+    $query = "select * from users where id = '{$id}'"; /*Verificar id, array to string */
     $result = mysqli_query($connection, $query);
 
     if (mysqli_num_rows($result) == 1) { /*Se o usuário existir.*/
