@@ -52,7 +52,7 @@ class UserController
 
     User::update($user->getId(), $_POST['name'], $_POST['email'], $_POST['type'], $_POST['password']);
 
-    if($user->getType() != "admin"){
+    if($_SESSION['user']->getType() != "admin"){
       header("location: /Treinamento2020/views/admin/dashboard.php");
     } else {
       header("location: /Treinamento2020/user/index");
