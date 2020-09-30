@@ -20,17 +20,21 @@ class UserController
   /*Criar e salvar um novo usuário no banco de dados. (POST)*/
   public function store()
   {
-    // if($_POST['password'] != $_POST['password_confirmation']){
-
-    // }
-    User::create(
-      $_POST['name'], 
-      $_POST['email'], 
-      $_POST['type'], 
-      $_POST['password']
-    );
-
-    header("location: /Treinamento2020/user/index");
+    if($_POST['password'] != $_POST['password_confirmation']){
+      $_SESSION['different-passwords'] = "Erro, as senhas digitadas não são iguais!";
+      header("location: /Treinamento2020/user/create");
+      
+    } else {
+      User::create(
+        $_POST['name'], 
+        $_POST['email'], 
+        $_POST['type'], 
+        $_POST['password']
+      );
+  
+      header("location: /Treinamento2020/user/index");
+      unset($_SESSION['different-passwords']);
+    }
   }
 
   /*Página para a edição de usuário. (GET)*/
