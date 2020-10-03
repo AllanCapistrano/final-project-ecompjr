@@ -37,6 +37,7 @@ class UserController
         header("location: /Treinamento2020/user/create");
       } else{
         header("location: /Treinamento2020/user/index");
+        unset($_SESSION['invalid-email']);
       }
       unset($_SESSION['different-passwords']);
     }
