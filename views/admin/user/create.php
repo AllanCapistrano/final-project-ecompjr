@@ -12,6 +12,10 @@ UserController::verifyAdmin();
 if (isset($_SESSION['different-passwords'])) {
   echo $_SESSION['different-passwords'];
 }
+
+if (isset($_SESSION['invalid-email'])) {
+  echo $_SESSION['invalid-email'];
+}
 ?>
 
 <form action="/Treinamento2020/user/store" method="post">

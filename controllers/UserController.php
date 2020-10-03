@@ -23,15 +23,21 @@ class UserController
     if ($_POST['password'] != $_POST['password_confirmation']) {
       $_SESSION['different-passwords'] = "Erro, as senhas digitadas não são iguais!";
       header("location: /Treinamento2020/user/create");
+      unset($_SESSION['invalid-email']);
     } else {
-      User::create(
+      $flag = User::create(
         $_POST['name'],
         $_POST['email'],
         $_POST['type'],
         $_POST['password']
       );
 
-      header("location: /Treinamento2020/user/index");
+      if(!$flag){
+        $_SESSION['invalid-email'] = "Erro, email já cadastrado!";
+        header("location: /Treinamento2020/user/create");
+      } else{
+        header("location: /Treinamento2020/user/index");
+      }
       unset($_SESSION['different-passwords']);
     }
   }

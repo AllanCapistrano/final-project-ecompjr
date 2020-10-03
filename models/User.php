@@ -54,10 +54,19 @@ class User
   public static function create($name, $email, $type, $password)
   {
     $connection = Connection::getConnection();
-    $query = "insert into users(name, email, type, password) values('{$name}', 
-    '{$email}', '{$type}', '{$password}')";
+    $queryFindEmail = "select * from users where email = '{$email}'";
+    $result = mysqli_query($connection, $queryFindEmail);
 
-    mysqli_query($connection, $query);
+    if (mysqli_num_rows($result) == 1) {
+      return false;
+    } else {
+      $query = "insert into users(name, email, type, password) values('{$name}', 
+      '{$email}', '{$type}', '{$password}')";
+  
+      mysqli_query($connection, $query);
+      
+      return true;
+    }
   }
 
   /*Retorna todos os usuários.*/
