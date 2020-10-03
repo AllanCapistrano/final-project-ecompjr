@@ -18,7 +18,7 @@ if (isset($_SESSION['different-passwords'])) {
   <input required name="name" placeholder="name">
   <input required type="email" name="email" placeholder="email">
   <select required name="type">
-    <option value="">Selecione um tipo</option>
+    <option value="" selected disabled>Selecione um tipo</option>
     <option value="admin">Administrador</option>
     <option value="user">Usuário comum</option>
   </select>

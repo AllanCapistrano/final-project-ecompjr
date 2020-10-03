@@ -18,7 +18,7 @@ if (isset($_SESSION['different-passwords'])) {
   <input name="name" placeholder="name" value="<?php echo $user->getName() ?>">
   <input type="email" name="email" placeholder="email" value="<?php echo $user->getEmail() ?>">
   <select name="type">
-    <option value="">Selecione um tipo</option>
+    <option value="" disabled>Selecione um tipo</option>
     <option value="admin" <?php if ($user->getType() == "admin") { ?> selected <?php } ?>>Administrador</option>
     <option value="user" <?php if ($user->getType() == "user") { ?> selected <?php } ?>>Usuário comum</option>
   </select>
