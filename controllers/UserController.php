@@ -63,6 +63,13 @@ class UserController
         $_POST['password_confirmation']
       );
 
+      if ($_SESSION['user']->getId() === $id[0]) {
+        $_SESSION['user']->setName($_POST['name']);
+        $_SESSION['user']->setEmail($_POST['email']);
+        $_SESSION['user']->setType($_POST['type']);
+        $_SESSION['user']->setPassword($_POST['password']);
+      }
+
       if (!$flag) { /*Caso as senhas digitadas forem diferentes.*/
         header("location: /Treinamento2020/user/edit/{$id[0]}");
       } else {
