@@ -134,4 +134,24 @@ class User
   {
     return $this->password;
   }
+
+  public function setType($type)
+  {
+    $this->type = $type;
+  }
+
+  public function setName($name)
+  {
+    $this->name = $name;
+  }
+
+  public function setEmail($email)
+  {
+    $this->email = $email;
+  }
+
+  public function setPassword($password)
+  {
+    $this->password = $password;
+  }
 }
