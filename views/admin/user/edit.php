@@ -13,6 +13,11 @@ $user = UserController::get($_GET['id']);
 if (isset($_SESSION['different-passwords'])) {
   echo $_SESSION['different-passwords'];
 }
+
+if (!$user) {
+  echo "<h1>Erro 404</h1>";
+  echo "<h3>Usuário não encontrado.</h3>";;
+}
 ?>
 <form action="/Treinamento2020/user/update/<?php echo $user->getId() ?>" method="post">
   <input name="name" placeholder="name" value="<?php echo $user->getName() ?>">

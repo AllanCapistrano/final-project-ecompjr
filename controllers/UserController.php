@@ -20,18 +20,17 @@ class UserController
   /*Criar e salvar um novo usuário no banco de dados. (POST)*/
   public function store()
   {
-    if($_POST['password'] != $_POST['password_confirmation']){
+    if ($_POST['password'] != $_POST['password_confirmation']) {
       $_SESSION['different-passwords'] = "Erro, as senhas digitadas não são iguais!";
       header("location: /Treinamento2020/user/create");
-      
     } else {
       User::create(
-        $_POST['name'], 
-        $_POST['email'], 
-        $_POST['type'], 
+        $_POST['name'],
+        $_POST['email'],
+        $_POST['type'],
         $_POST['password']
       );
-  
+
       header("location: /Treinamento2020/user/index");
       unset($_SESSION['different-passwords']);
     }
@@ -51,19 +50,27 @@ class UserController
 
   /*Editar um usuário e salvar no banco de dados.*/
   public function update($id)
-  { 
-    $user = User::get($id[0]); /*Verificar se o usuário existe no banco de dados.*/
+  {
+    $user = User::get($id[0]);
 
-    $flag = User::update($user->getId(), $_POST['name'], $_POST['email'], $_POST['type'], 
-      $_POST['password'], $_POST['password_confirmation']);
+    if ($user) { /*Verificar se o usuário existe no banco de dados.*/
+      $flag = User::update(
+        $user->getId(),
+        $_POST['name'],
+        $_POST['email'],
+        $_POST['type'],
+        $_POST['password'],
+        $_POST['password_confirmation']
+      );
 
-    if(!$flag){ /*Caso as senhas digitadas forem diferentes.*/
-      header("location: /Treinamento2020/user/edit/{$id[0]}");
-    } else {
-      if($_SESSION['user']->getType() != "admin"){
-        header("location: /Treinamento2020/views/admin/dashboard.php");
+      if (!$flag) { /*Caso as senhas digitadas forem diferentes.*/
+        header("location: /Treinamento2020/user/edit/{$id[0]}");
       } else {
-        header("location: /Treinamento2020/user/index");
+        if ($_SESSION['user']->getType() != "admin") {
+          header("location: /Treinamento2020/views/admin/dashboard.php");
+        } else {
+          header("location: /Treinamento2020/user/index");
+        }
       }
     }
   }
@@ -73,9 +80,11 @@ class UserController
   {
     $user = User::get($id[0]);
 
-    User::delete($user->getId());
+    if ($user) {
+      User::delete($user->getId());
 
-    header("location: /Treinamento2020/user/index");
+      header("location: /Treinamento2020/user/index");
+    }
   }
 
   /*Listar todos os usuários.*/
@@ -91,7 +100,7 @@ class UserController
 
     if ($user) {
       $_SESSION['user'] = $user;
-      
+
       header("location: /Treinamento2020/views/admin/dashboard.php");
       unset($_SESSION['login-error']);
     } else {
@@ -104,7 +113,7 @@ class UserController
 
   public static function verifyLogin()
   {
-    if($_SESSION['user'] == null){ /*Se não estiver logado.*/
+    if ($_SESSION['user'] == null) { /*Se não estiver logado.*/
       $_SESSION['offline'] = "É necessário fazer login primeiro para poder acessar essa página! <br/>";
 
       header("location: /Treinamento2020/home/login");
@@ -115,7 +124,7 @@ class UserController
 
   public static function verifyAdmin()
   {
-    if($_SESSION['user']->getType() != "admin"){
+    if ($_SESSION['user']->getType() != "admin") {
       echo "<h1>Erro 403</h1>";
       echo "<h3>Você não possui permissão para acessar essa página.</h3>";
       echo "<a href='/Treinamento2020/views/admin/dashboard.php'>Voltar</a>";
