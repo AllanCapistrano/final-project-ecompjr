@@ -6,8 +6,17 @@ UserController::verifyLogin();
 $user = $_SESSION['user'];
 ?>
 
-
 <html>
+
+<?php
+if (isset($_SESSION['different-passwords'])) {
+  echo $_SESSION['different-passwords'];
+}
+
+if (isset($_SESSION['invalid-email'])) {
+  echo $_SESSION['invalid-email'];
+}
+?>
 <form action="/Treinamento2020/user/update/<?php echo $user->getId() ?>" method="post">
   <input name="name" placeholder="name" value="<?php echo $user->getName() ?>">
   <input type="email" name="email" placeholder="email" value="<?php echo $user->getEmail() ?>">

@@ -14,6 +14,10 @@ if (isset($_SESSION['different-passwords'])) {
   echo $_SESSION['different-passwords'];
 }
 
+if (isset($_SESSION['invalid-email'])) {
+  echo $_SESSION['invalid-email'];
+}
+
 if (!$user) {
   echo "<h1>Erro 404</h1>";
   echo "<h3>Usuário não encontrado.</h3>";;
