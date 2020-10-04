@@ -25,17 +25,19 @@ class UserController
       header("location: /Treinamento2020/user/create");
       unset($_SESSION['invalid-email']);
     } else {
-      $flag = User::create(
-        $_POST['name'],
-        $_POST['email'],
-        $_POST['type'],
-        $_POST['password']
-      );
+      $flag = User::verifyEmail($_POST['email']);
 
-      if(!$flag){
+      if (!$flag) {
         $_SESSION['invalid-email'] = "Erro, email já cadastrado!";
         header("location: /Treinamento2020/user/create");
-      } else{
+      } else {
+        User::create(
+          $_POST['name'],
+          $_POST['email'],
+          $_POST['type'],
+          $_POST['password']
+        );
+
         header("location: /Treinamento2020/user/index");
         unset($_SESSION['invalid-email']);
       }
@@ -59,32 +61,60 @@ class UserController
   public function update($id)
   {
     $user = User::get($id[0]);
+    $flag = true;
 
-    if ($user) { /*Verificar se o usuário existe no banco de dados.*/
-      $flag = User::update(
-        $user->getId(),
-        $_POST['name'],
-        $_POST['email'],
-        $_POST['type'],
-        $_POST['password'],
-        $_POST['password_confirmation']
-      );
+    if ($user) {
+      if ($_POST['password'] != $_POST['password_confirmation']) {
+        $_SESSION['different-passwords'] = "Erro, as senhas digitadas não são iguais!";
 
-      if ($_SESSION['user']->getId() === $id[0]) {
-        $_SESSION['user']->setName($_POST['name']);
-        $_SESSION['user']->setEmail($_POST['email']);
-        $_SESSION['user']->setType($_POST['type']);
-        $_SESSION['user']->setPassword($_POST['password']);
-      }
-
-      if (!$flag) { /*Caso as senhas digitadas forem diferentes.*/
-        header("location: /Treinamento2020/user/edit/{$id[0]}");
-      } else {
-        if ($_SESSION['user']->getType() != "admin") {
-          header("location: /Treinamento2020/views/admin/dashboard.php");
+        if($_SESSION['user']->getId() === $id[0]){
+          header("location: /Treinamento2020/user/profile");
         } else {
-          header("location: /Treinamento2020/user/index");
+          if ($_SESSION['user']->getType() === "admin") {
+            header("location: /Treinamento2020/user/edit/{$id[0]}");
+          }
         }
+        unset($_SESSION['invalid-email']);
+      } else {
+        if ($_POST['email'] != $user->getEmail()) { /*Se o email digitado é o do próprio usuário.*/
+          $flag = User::verifyEmail($_POST['email']);
+        }
+
+        if (!$flag) {
+          $_SESSION['invalid-email'] = "Erro, email já cadastrado!";
+
+          if($_SESSION['user']->getId() === $id[0]){ /*Verificar se está editando o próprio perfil ou não.*/
+            header("location: /Treinamento2020/user/profile");
+          } else {
+            if ($_SESSION['user']->getType() === "admin") {
+              header("location: /Treinamento2020/user/edit/{$id[0]}");
+            }
+          }
+        } else {
+          User::update(
+            $user->getId(),
+            $_POST['name'],
+            $_POST['email'],
+            $_POST['type'],
+            $_POST['password'],
+            $_POST['password_confirmation']
+          );
+
+          if ($_SESSION['user']->getId() === $id[0]) {
+            $_SESSION['user']->setName($_POST['name']);
+            $_SESSION['user']->setEmail($_POST['email']);
+            $_SESSION['user']->setType($_POST['type']);
+            $_SESSION['user']->setPassword($_POST['password']);
+          }
+
+          if ($_SESSION['user']->getType() != "admin") {
+            header("location: /Treinamento2020/views/admin/dashboard.php");
+          } else {
+            header("location: /Treinamento2020/user/index");
+          }
+          unset($_SESSION['invalid-email']);
+        }
+        unset($_SESSION['different-passwords']);
       }
     }
   }
