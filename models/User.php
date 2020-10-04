@@ -62,9 +62,9 @@ class User
     } else {
       $query = "insert into users(name, email, type, password) values('{$name}', 
       '{$email}', '{$type}', '{$password}')";
-  
+
       mysqli_query($connection, $query);
-      
+
       return true;
     }
   }
@@ -97,26 +97,30 @@ class User
   /*Editar um usuário já existente.*/
   public static function update($id, $name, $email, $type, $password, $password_confirmation)
   {
-    if ($password === $password_confirmation) {
-      $connection = Connection::getConnection();
+    $connection = Connection::getConnection();
 
-      if ($password == "") { /*Se não digitar uma senha, ela não é alterada. */
-        $query = "update users set name = '{$name}', email = '{$email}', 
+    if ($password == "") { /*Se não digitar uma senha, ela não é alterada.*/
+      $query = "update users set name = '{$name}', email = '{$email}', 
         type = '{$type}' where id = {$id} ";
-      } else {
-        $query = "update users set name = '{$name}', email = '{$email}', 
-          type = '{$type}', password = '{$password}' where id = {$id} ";
-      }
-
-      mysqli_query($connection, $query);
-      unset($_SESSION['different-passwords']);
-
-      return true;
     } else {
-      $_SESSION['different-passwords'] = "Erro, as senhas digitadas não são iguais!";
+      $query = "update users set name = '{$name}', email = '{$email}', 
+        type = '{$type}', password = '{$password}' where id = {$id} ";
+    }
 
+    mysqli_query($connection, $query);
+  }
+
+  /*Verificar se o email já está cadastrado no sistema.*/
+  public static function verifyEmail($email)
+  {
+    $connection = Connection::getConnection();
+    $queryFindEmail = "select * from users where email = '{$email}'";
+    $result = mysqli_query($connection, $queryFindEmail);
+
+    if (mysqli_num_rows($result) == 1) {
       return false;
     }
+    return true;
   }
 
   public function getId()
