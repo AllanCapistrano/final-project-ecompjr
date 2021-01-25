@@ -3,8 +3,8 @@
 ------------
 
 ## 📚 Descrição ##
-**Projeto final back-end do processo trainee 2020 da EcompJr.** <br/>
-O projeto trata-se de um sistema de autenticação e CRUD dos usuários, com o objetivo de exercitar e por em prática os conceitos aprendidos durante os treinamentos de back-end ministrados por [Adriel Brito](https://github.com/asbrito).
+**Projeto final back end do processo trainee 2020 da EcompJr.** <br/>
+O projeto trata-se de um sistema de autenticação e CRUD dos usuários, com o objetivo de exercitar e por em prática os conceitos aprendidos durante os treinamentos de back end ministrados por [Adriel Brito](https://github.com/asbrito).
 
 **🔗 Tecnologias utilizadas:**
 - [PHP](https://www.php.net/)
